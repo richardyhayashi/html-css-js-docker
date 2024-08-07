@@ -1,16 +1,24 @@
 services:
-  nginx:
-    image: nginx:1.27.0-alpine
-    restart: unless-stopped
-    ports:
-      - ${NGINX_PORT_OUT}:${NGINX_PORT} 
-      - ${NGINX_SSL_OUT}:${NGINX_SSL}
-    #volume:
-    #  - ./etc/nginx/conf.d:/etc/nginx/conf.d:ro
-    #env_file:
-    #  - ./.env
+  # postgres:
+  #   image: postgres:16.3-alpine
+  #   restart: unless-stopped
+  #   ports:
+  #     - $(DB_PORT_OUT):$(DB_PORT)
+
+  #redis:
+  #  image: redis:7.4.0-alpine
+  #  port:
+  #    - 
 
   html-css-js:
-    image: node:22.3.0-alpine
-    #ports:
-      
+    image: ${PROJECT_NAME}-dev
+    build:
+      dockerfile: Dockerfile.dev
+    container_name: ${PROJECT_NAME}-dev_c
+    restart: unless-stopped
+    ports:
+      - ${NGINX_PORT_OUT}:${NGINX_PORT}
+    volumes:
+      #- ./etc/nginx/conf.d:/etc/ningx/conf.d
+      - ./src:/usr/share/nginx/html:ro
+    
