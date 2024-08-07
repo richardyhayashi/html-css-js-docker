@@ -1,0 +1,16 @@
+services:
+  nginx:
+    image: nginx:1.27.0-alpine
+    restart: unless-stopped
+    ports:
+      - ${NGINX_PORT_OUT}:${NGINX_PORT} 
+      - ${NGINX_SSL_OUT}:${NGINX_SSL}
+    #volume:
+    #  - ./etc/nginx/conf.d:/etc/nginx/conf.d:ro
+    #env_file:
+    #  - ./.env
+
+  html-css-js:
+    image: node:22.3.0-alpine
+    #ports:
+      
